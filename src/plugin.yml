@@ -1,0 +1,4 @@
+name: CommandDisabler
+main: net.milkbowl.commanddisabler.CommandDisabler
+version: 1.0
+author: Sleaker
