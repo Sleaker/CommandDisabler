@@ -13,54 +13,54 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
 public class CommandDisabler extends JavaPlugin {
-	
+
 	protected static final Logger log = Logger.getLogger("Minecraft");
 	public static final String plugName = "[CommandDisabler]";
 	private CDPlayerListener playerListener = new CDPlayerListener(this);
 	protected static Configuration config;
 	protected Set<String> disabledCmds = new HashSet<String>();
-	
+
 	@Override
 	public void onDisable() {
 		log.info(plugName + " - Disabled successfully!");
-		
+
 	}
 
 	@Override
 	public void onEnable() {
 		PluginManager pm = this.getServer().getPluginManager();
-		
+
 		//Try to enable the plugin, disable if there was an error.
 		if (!getConfig()) {
 			pm.disablePlugin(this);
 			log.info(plugName + " - Config could not be created, or was empty.  Please specific commands to disable.");
 		}
-			
+
 		pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, playerListener, Priority.Monitor, this);
-        
+
 		log.info(plugName + this.getDescription().getName() + " v" + this.getDescription().getVersion() + " enabled successfully.");
 	}
 
 	private boolean getConfig() {
-	       //Check to see if there is a configuration file.
-        File yml = new File(getDataFolder()+"/config.yml");
+		//Check to see if there is a configuration file.
+		File yml = new File(getDataFolder()+"/config.yml");
 
-        if (!yml.exists()) {
-            new File(getDataFolder().toString()).mkdir();
-            try {
-                yml.createNewFile();
-            }
-            catch (IOException ex) {
-                log.info(plugName + " - Cannot create configuration file. And none to load, disabling plugin.");
-                return false;
-            }
-        }	
-        
-        config = getConfiguration();
-        if (!config.getKeys().isEmpty()) {
-        	disabledCmds.addAll(config.getKeys());
-        	return true;
-        } else
-        	return false;
+		if (!yml.exists()) {
+			new File(getDataFolder().toString()).mkdir();
+			try {
+				yml.createNewFile();
+			}
+			catch (IOException ex) {
+				log.info(plugName + " - Cannot create configuration file. And none to load, disabling plugin.");
+				return false;
+			}
+		}	
+
+		config = getConfiguration();
+		if (!config.getKeys(null).isEmpty()) {
+			disabledCmds.addAll(config.getKeys());
+			return true;
+		} else
+			return false;
 	}
 }
