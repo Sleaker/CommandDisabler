@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.bukkit.ChatColor;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginManager;
@@ -38,7 +39,13 @@ public class CommandDisabler extends JavaPlugin {
 		}
 
 		pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, playerListener, Priority.Monitor, this);
-
+		
+		//Get a string representation of the disabled commands
+		String disabled = "";
+		for (String msg : disabledCmds)
+			disabled += msg + "  ";
+		
+		log.info(plugName + " - Disabled commands: " + ChatColor.BLUE + disabled);
 		log.info(plugName + this.getDescription().getName() + " v" + this.getDescription().getVersion() + " enabled successfully.");
 	}
 
@@ -58,10 +65,15 @@ public class CommandDisabler extends JavaPlugin {
 		}	
 
 		config = getConfiguration();
-		if (!config.getKeys(null).isEmpty()) {
-			disabledCmds.addAll(config.getKeys());
-			return true;
-		} else
+		if (!config.getKeys(null).contains("disablecommands")) {
+			config.setProperty("disabledcommands", null);
+			config.save();
+		}
+		disabledCmds.addAll(config.getStringList("disabledcommands", null));
+		if (disabledCmds.isEmpty())
 			return false;
+		else
+			return true;
+
 	}
 }
