@@ -41,7 +41,7 @@ public class CommandDisabler extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, playerListener, Priority.Monitor, this);
 		
 		//Get a string representation of the disabled commands
-		String disabled = "";
+		String disabled = null;
 		for (String msg : disabledCmds)
 			disabled += msg + "  ";
 		
@@ -65,10 +65,11 @@ public class CommandDisabler extends JavaPlugin {
 		}	
 
 		config = getConfiguration();
-		if (!config.getKeys(null).contains("disablecommands")) {
+		if (!config.getKeys(null).contains("disabledcommands")) {
 			config.setProperty("disabledcommands", null);
 			config.save();
 		}
+		
 		disabledCmds.addAll(config.getStringList("disabledcommands", null));
 		if (disabledCmds.isEmpty())
 			return false;
