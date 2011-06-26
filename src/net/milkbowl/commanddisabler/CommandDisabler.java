@@ -41,7 +41,7 @@ public class CommandDisabler extends JavaPlugin {
 		pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, playerListener, Priority.Monitor, this);
 		
 		//Get a string representation of the disabled commands
-		String disabled = null;
+		String disabled = "";
 		for (String msg : disabledCmds)
 			disabled += msg + "  ";
 		
