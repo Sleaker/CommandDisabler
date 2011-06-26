@@ -34,6 +34,7 @@ public class CommandDisabler extends JavaPlugin {
 		if (!getConfig()) {
 			pm.disablePlugin(this);
 			log.info(plugName + " - Config could not be created, or was empty.  Please specific commands to disable.");
+			return;
 		}
 
 		pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, playerListener, Priority.Monitor, this);
