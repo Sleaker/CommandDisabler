@@ -5,7 +5,7 @@ import org.bukkit.event.player.PlayerListener;
 
 public class CDPlayerListener extends PlayerListener {
 	CommandDisabler plugin;
-
+	
 	CDPlayerListener(CommandDisabler plugin) {
 		this.plugin = plugin;
 	}
@@ -14,7 +14,7 @@ public class CDPlayerListener extends PlayerListener {
 	public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
 		String cmd = event.getMessage().toLowerCase();
 		for (String disabled : plugin.disabledCmds) {
-			if (disabled.startsWith("/" + cmd)) {
+			if (cmd.startsWith("/" + disabled)) {
 				event.setCancelled(true);
 				return;
 			}
