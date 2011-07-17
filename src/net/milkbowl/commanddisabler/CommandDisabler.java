@@ -39,12 +39,12 @@ public class CommandDisabler extends JavaPlugin {
 		}
 
 		pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, playerListener, Priority.Monitor, this);
-		
+
 		//Get a string representation of the disabled commands
 		String disabled = "";
 		for (String msg : disabledCmds)
 			disabled += msg + "  ";
-		
+
 		log.info(plugName + " - Disabled commands: " + ChatColor.BLUE + disabled);
 		log.info(plugName + this.getDescription().getName() + " v" + this.getDescription().getVersion() + " enabled successfully.");
 	}
@@ -57,8 +57,7 @@ public class CommandDisabler extends JavaPlugin {
 			new File(getDataFolder().toString()).mkdir();
 			try {
 				yml.createNewFile();
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				log.info(plugName + " - Cannot create configuration file. And none to load, disabling plugin.");
 				return false;
 			}
@@ -69,7 +68,7 @@ public class CommandDisabler extends JavaPlugin {
 			config.setProperty("disabledcommands", null);
 			config.save();
 		}
-		
+
 		disabledCmds.addAll(config.getStringList("disabledcommands", null));
 		if (disabledCmds.isEmpty())
 			return false;
