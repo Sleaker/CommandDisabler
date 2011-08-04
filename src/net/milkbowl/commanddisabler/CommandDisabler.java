@@ -70,10 +70,7 @@ public class CommandDisabler extends JavaPlugin {
 		}
 
 		disabledCmds.addAll(config.getStringList("disabledcommands", null));
-		if (disabledCmds.isEmpty())
-			return false;
-		else
-			return true;
-
+		
+		return !disabledCmds.isEmpty();
 	}
 }
